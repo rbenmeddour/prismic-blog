@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  PrismicRichText,
+  useAllPrismicDocumentsByType,
+  usePrismicDocumentByID,
+} from '@prismicio/react';
 
-function App() {
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+
+const App = () => {
+  // get all posts
+  const [documents] = useAllPrismicDocumentsByType('post');
+
+  // get post by id
+  const [document, {}] = usePrismicDocumentByID('Yz7RUhEAACQAiK5v');
+
+  console.log(documents);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {document && <PrismicRichText field={document.data.title} />}
+      {document && <PrismicRichText field={document.data.content} />}
+      Hello
     </div>
   );
-}
+};
 
 export default App;
